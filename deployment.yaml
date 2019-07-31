@@ -1,0 +1,32 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: springapp
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: springapp
+    spec:
+      containers:
+      - name: springapp
+        image: nithinkube.azurecr.io/springapp:latest
+        ports:
+        - containerPort: 3000
+      imagePullSecrets:
+      - name: registrypullsecret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: springapp-service
+spec:
+  type: NodePort
+  selector:
+    app: springapp
+  ports:
+  - protocol: TCP
+    port: 3000
+    targetPort: 3000
+    nodePort: 31000
