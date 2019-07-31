@@ -1,8 +1,11 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: springapp
 spec:
+  selector:
+    matchLabels:
+      app: springapp
   replicas: 1
   template:
     metadata:
@@ -15,7 +18,7 @@ spec:
         ports:
         - containerPort: 3000
       imagePullSecrets:
-      - name: $KUBERNETES_SECRET_NAME
+      - name: registrypullsecret
 ---
 apiVersion: v1
 kind: Service
@@ -30,3 +33,5 @@ spec:
     port: 3000
     targetPort: 3000
     nodePort: 31000
+  selector:
+    app: springapp
