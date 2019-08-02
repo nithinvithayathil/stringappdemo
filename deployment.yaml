@@ -25,13 +25,9 @@ kind: Service
 metadata:
   name: springapp-service
 spec:
-  type: NodePort
-  selector:
-    app: springapp
+  loadBalancerIP: 52.172.45.194
+  type: LoadBalancer
   ports:
-  - protocol: TCP
-    port: 3000
-    targetPort: 3000
-    nodePort: 31000
+  - port: 8080
   selector:
     app: springapp
